@@ -33,17 +33,17 @@ public abstract class OrderItemsServiceBase : IOrderItemsService
         {
             orderItem.Id = createDto.Id;
         }
-        if (createDto.Order != null)
-        {
-            orderItem.Order = await _context
-                .Orders.Where(order => createDto.Order.Id == order.Id)
-                .FirstOrDefaultAsync();
-        }
-
         if (createDto.Item != null)
         {
             orderItem.Item = await _context
                 .Items.Where(item => createDto.Item.Id == item.Id)
+                .FirstOrDefaultAsync();
+        }
+
+        if (createDto.Order != null)
+        {
+            orderItem.Order = await _context
+                .Orders.Where(order => createDto.Order.Id == order.Id)
                 .FirstOrDefaultAsync();
         }
 
@@ -81,8 +81,8 @@ public abstract class OrderItemsServiceBase : IOrderItemsService
     public async Task<List<OrderItemDto>> OrderItems(OrderItemFindMany findManyArgs)
     {
         var orderItems = await _context
-            .OrderItems.Include(x => x.Order)
-            .Include(x => x.Item)
+            .OrderItems.Include(x => x.Item)
+            .Include(x => x.Order)
             .ApplyWhere(findManyArgs.Where)
             .ApplySkip(findManyArgs.Skip)
             .ApplyTake(findManyArgs.Take)
