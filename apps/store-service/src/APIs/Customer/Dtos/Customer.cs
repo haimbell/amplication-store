@@ -1,8 +1,8 @@
 namespace StoreService.APIs.Dtos;
 
-public class CustomerCreateInput
+public class Customer
 {
-    public string? Id { get; set; }
+    public string Id { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
@@ -10,5 +10,5 @@ public class CustomerCreateInput
 
     public string? Name { get; set; }
 
-    public List<Order>? Orders { get; set; }
+    public List<string>? Orders { get; set; }
 }

@@ -5,24 +5,24 @@ namespace StoreService.APIs.Extensions;
 
 public static class ItemsExtensions
 {
-    public static ItemDto ToDto(this Item model)
+    public static Item ToDto(this ItemDbModel model)
     {
-        return new ItemDto
+        return new Item
         {
-            CreatedAt = model.CreatedAt,
             Id = model.Id,
-            Name = model.Name,
-            OrderItems = model.OrderItems?.Select(x => new OrderItemIdDto { Id = x.Id }).ToList(),
-            Price = model.Price,
+            CreatedAt = model.CreatedAt,
             UpdatedAt = model.UpdatedAt,
+            Name = model.Name,
+            Price = model.Price,
+            OrderItems = model.OrderItems?.Select(x => x.Id).ToList(),
         };
     }
 
-    public static Item ToModel(this ItemUpdateInput updateDto, ItemIdDto idDto)
+    public static ItemDbModel ToModel(this ItemUpdateInput updateDto, ItemWhereUniqueInput uniqueId)
     {
-        var item = new Item
+        var item = new ItemDbModel
         {
-            Id = idDto.Id,
+            Id = uniqueId.Id,
             Name = updateDto.Name,
             Price = updateDto.Price
         };

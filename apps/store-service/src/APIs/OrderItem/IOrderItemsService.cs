@@ -8,40 +8,40 @@ public interface IOrderItemsService
     /// <summary>
     /// Create one OrderItems
     /// </summary>
-    public Task<OrderItemDto> CreateOrderItem(OrderItemCreateInput orderitemDto);
+    public Task<OrderItem> CreateOrderItem(OrderItemCreateInput orderitem);
 
     /// <summary>
     /// Delete one OrderItems
     /// </summary>
-    public Task DeleteOrderItem(OrderItemIdDto idDto);
+    public Task DeleteOrderItem(OrderItemWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Find many OrderItems
     /// </summary>
-    public Task<List<OrderItemDto>> OrderItems(OrderItemFindMany findManyArgs);
+    public Task<List<OrderItem>> OrderItems(OrderItemFindManyArgs findManyArgs);
 
     /// <summary>
     /// Get one OrderItems
     /// </summary>
-    public Task<OrderItemDto> OrderItem(OrderItemIdDto idDto);
+    public Task<OrderItem> OrderItem(OrderItemWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Get a Item record for OrderItems
     /// </summary>
-    public Task<ItemDto> GetItem(OrderItemIdDto idDto);
+    public Task<Item> GetItem(OrderItemWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Get a Order record for OrderItems
     /// </summary>
-    public Task<OrderDto> GetOrder(OrderItemIdDto idDto);
+    public Task<Order> GetOrder(OrderItemWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Meta data about OrderItems records
     /// </summary>
-    public Task<MetadataDto> OrderItemsMeta(OrderItemFindMany findManyArgs);
+    public Task<MetadataDto> OrderItemsMeta(OrderItemFindManyArgs findManyArgs);
 
     /// <summary>
     /// Update one OrderItems
     /// </summary>
-    public Task UpdateOrderItem(OrderItemIdDto idDto, OrderItemUpdateInput updateDto);
+    public Task UpdateOrderItem(OrderItemWhereUniqueInput uniqueId, OrderItemUpdateInput updateDto);
 }

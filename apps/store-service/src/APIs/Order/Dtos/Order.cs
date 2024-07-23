@@ -2,13 +2,13 @@ using StoreService.Core.Enums;
 
 namespace StoreService.APIs.Dtos;
 
-public class OrderUpdateInput
+public class Order
 {
-    public string? Id { get; set; }
+    public string Id { get; set; }
 
-    public DateTime? CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime UpdatedAt { get; set; }
 
     public StatusEnum? Status { get; set; }
 

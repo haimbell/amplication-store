@@ -1,6 +1,6 @@
 namespace StoreService.APIs.Dtos;
 
-public class OrderItemIdDto
+public class ItemWhereUniqueInput
 {
     public string Id { get; set; }
 }

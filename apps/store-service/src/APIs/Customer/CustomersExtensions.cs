@@ -5,21 +5,24 @@ namespace StoreService.APIs.Extensions;
 
 public static class CustomersExtensions
 {
-    public static CustomerDto ToDto(this Customer model)
+    public static Customer ToDto(this CustomerDbModel model)
     {
-        return new CustomerDto
+        return new Customer
         {
-            CreatedAt = model.CreatedAt,
             Id = model.Id,
-            Name = model.Name,
-            Orders = model.Orders?.Select(x => new OrderIdDto { Id = x.Id }).ToList(),
+            CreatedAt = model.CreatedAt,
             UpdatedAt = model.UpdatedAt,
+            Name = model.Name,
+            Orders = model.Orders?.Select(x => x.Id).ToList(),
         };
     }
 
-    public static Customer ToModel(this CustomerUpdateInput updateDto, CustomerIdDto idDto)
+    public static CustomerDbModel ToModel(
+        this CustomerUpdateInput updateDto,
+        CustomerWhereUniqueInput uniqueId
+    )
     {
-        var customer = new Customer { Id = idDto.Id, Name = updateDto.Name };
+        var customer = new CustomerDbModel { Id = uniqueId.Id, Name = updateDto.Name };
 
         // map required fields
         if (updateDto.CreatedAt != null)

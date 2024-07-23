@@ -5,21 +5,24 @@ namespace StoreService.APIs.Extensions;
 
 public static class OrderItemsExtensions
 {
-    public static OrderItemDto ToDto(this OrderItem model)
+    public static OrderItem ToDto(this OrderItemDbModel model)
     {
-        return new OrderItemDto
+        return new OrderItem
         {
-            CreatedAt = model.CreatedAt,
             Id = model.Id,
-            Item = new ItemIdDto { Id = model.ItemId },
-            Order = new OrderIdDto { Id = model.OrderId },
+            CreatedAt = model.CreatedAt,
             UpdatedAt = model.UpdatedAt,
+            Order = model.OrderId,
+            Item = model.ItemId,
         };
     }
 
-    public static OrderItem ToModel(this OrderItemUpdateInput updateDto, OrderItemIdDto idDto)
+    public static OrderItemDbModel ToModel(
+        this OrderItemUpdateInput updateDto,
+        OrderItemWhereUniqueInput uniqueId
+    )
     {
-        var orderItem = new OrderItem { Id = idDto.Id };
+        var orderItem = new OrderItemDbModel { Id = uniqueId.Id };
 
         // map required fields
         if (updateDto.CreatedAt != null)

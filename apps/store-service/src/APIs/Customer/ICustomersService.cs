@@ -8,50 +8,56 @@ public interface ICustomersService
     /// <summary>
     /// Create one Customer
     /// </summary>
-    public Task<CustomerDto> CreateCustomer(CustomerCreateInput customerDto);
+    public Task<Customer> CreateCustomer(CustomerCreateInput customer);
 
     /// <summary>
     /// Connect multiple Orders records to Customer
     /// </summary>
-    public Task ConnectOrders(CustomerIdDto idDto, OrderIdDto[] ordersId);
+    public Task ConnectOrders(CustomerWhereUniqueInput uniqueId, OrderWhereUniqueInput[] ordersId);
 
     /// <summary>
     /// Disconnect multiple Orders records from Customer
     /// </summary>
-    public Task DisconnectOrders(CustomerIdDto idDto, OrderIdDto[] ordersId);
+    public Task DisconnectOrders(
+        CustomerWhereUniqueInput uniqueId,
+        OrderWhereUniqueInput[] ordersId
+    );
 
     /// <summary>
     /// Find multiple Orders records for Customer
     /// </summary>
-    public Task<List<OrderDto>> FindOrders(CustomerIdDto idDto, OrderFindMany OrderFindMany);
+    public Task<List<Order>> FindOrders(
+        CustomerWhereUniqueInput uniqueId,
+        OrderFindManyArgs OrderFindManyArgs
+    );
 
     /// <summary>
     /// Meta data about Customer records
     /// </summary>
-    public Task<MetadataDto> CustomersMeta(CustomerFindMany findManyArgs);
+    public Task<MetadataDto> CustomersMeta(CustomerFindManyArgs findManyArgs);
 
     /// <summary>
     /// Update multiple Orders records for Customer
     /// </summary>
-    public Task UpdateOrders(CustomerIdDto idDto, OrderIdDto[] ordersId);
+    public Task UpdateOrders(CustomerWhereUniqueInput uniqueId, OrderWhereUniqueInput[] ordersId);
 
     /// <summary>
     /// Delete one Customer
     /// </summary>
-    public Task DeleteCustomer(CustomerIdDto idDto);
+    public Task DeleteCustomer(CustomerWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Find many Customers
     /// </summary>
-    public Task<List<CustomerDto>> Customers(CustomerFindMany findManyArgs);
+    public Task<List<Customer>> Customers(CustomerFindManyArgs findManyArgs);
 
     /// <summary>
     /// Get one Customer
     /// </summary>
-    public Task<CustomerDto> Customer(CustomerIdDto idDto);
+    public Task<Customer> Customer(CustomerWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Update one Customer
     /// </summary>
-    public Task UpdateCustomer(CustomerIdDto idDto, CustomerUpdateInput updateDto);
+    public Task UpdateCustomer(CustomerWhereUniqueInput uniqueId, CustomerUpdateInput updateDto);
 }

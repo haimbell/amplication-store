@@ -4,25 +4,25 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace StoreService.Infrastructure.Models;
 
 [Table("OrderItems")]
-public class OrderItem
+public class OrderItemDbModel
 {
-    [Required()]
-    public DateTime CreatedAt { get; set; }
-
     [Key()]
     [Required()]
     public string Id { get; set; }
 
-    public string? ItemId { get; set; }
+    [Required()]
+    public DateTime CreatedAt { get; set; }
 
-    [ForeignKey(nameof(ItemId))]
-    public Item? Item { get; set; } = null;
+    [Required()]
+    public DateTime UpdatedAt { get; set; }
 
     public string? OrderId { get; set; }
 
     [ForeignKey(nameof(OrderId))]
-    public Order? Order { get; set; } = null;
+    public OrderDbModel? Order { get; set; } = null;
 
-    [Required()]
-    public DateTime UpdatedAt { get; set; }
+    public string? ItemId { get; set; }
+
+    [ForeignKey(nameof(ItemId))]
+    public ItemDbModel? Item { get; set; } = null;
 }

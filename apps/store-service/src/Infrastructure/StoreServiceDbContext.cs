@@ -10,11 +10,11 @@ public class StoreServiceDbContext : IdentityDbContext<IdentityUser>
     public StoreServiceDbContext(DbContextOptions<StoreServiceDbContext> options)
         : base(options) { }
 
-    public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerDbModel> Customers { get; set; }
 
-    public DbSet<Item> Items { get; set; }
+    public DbSet<ItemDbModel> Items { get; set; }
 
-    public DbSet<Order> Orders { get; set; }
+    public DbSet<OrderDbModel> Orders { get; set; }
 
-    public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<OrderItemDbModel> OrderItems { get; set; }
 }

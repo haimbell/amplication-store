@@ -23,7 +23,7 @@ public abstract class ItemsControllerBase : ControllerBase
     /// </summary>
     [HttpPost()]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<ItemDto>> CreateItem(ItemCreateInput input)
+    public async Task<ActionResult<Item>> CreateItem(ItemCreateInput input)
     {
         var item = await _service.CreateItem(input);
 
@@ -35,11 +35,11 @@ public abstract class ItemsControllerBase : ControllerBase
     /// </summary>
     [HttpDelete("{Id}")]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult> DeleteItem([FromRoute()] ItemIdDto idDto)
+    public async Task<ActionResult> DeleteItem([FromRoute()] ItemWhereUniqueInput uniqueId)
     {
         try
         {
-            await _service.DeleteItem(idDto);
+            await _service.DeleteItem(uniqueId);
         }
         catch (NotFoundException)
         {
@@ -54,7 +54,7 @@ public abstract class ItemsControllerBase : ControllerBase
     /// </summary>
     [HttpGet()]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<List<ItemDto>>> Items([FromQuery()] ItemFindMany filter)
+    public async Task<ActionResult<List<Item>>> Items([FromQuery()] ItemFindManyArgs filter)
     {
         return Ok(await _service.Items(filter));
     }
@@ -64,11 +64,11 @@ public abstract class ItemsControllerBase : ControllerBase
     /// </summary>
     [HttpGet("{Id}")]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<ItemDto>> Item([FromRoute()] ItemIdDto idDto)
+    public async Task<ActionResult<Item>> Item([FromRoute()] ItemWhereUniqueInput uniqueId)
     {
         try
         {
-            return await _service.Item(idDto);
+            return await _service.Item(uniqueId);
         }
         catch (NotFoundException)
         {
@@ -82,13 +82,13 @@ public abstract class ItemsControllerBase : ControllerBase
     [HttpPost("{Id}/orderItems")]
     [Authorize(Roles = "user")]
     public async Task<ActionResult> ConnectOrderItems(
-        [FromRoute()] ItemIdDto idDto,
-        [FromQuery()] OrderItemIdDto[] orderItemsId
+        [FromRoute()] ItemWhereUniqueInput uniqueId,
+        [FromQuery()] OrderItemWhereUniqueInput[] orderItemsId
     )
     {
         try
         {
-            await _service.ConnectOrderItems(idDto, orderItemsId);
+            await _service.ConnectOrderItems(uniqueId, orderItemsId);
         }
         catch (NotFoundException)
         {
@@ -104,13 +104,13 @@ public abstract class ItemsControllerBase : ControllerBase
     [HttpDelete("{Id}/orderItems")]
     [Authorize(Roles = "user")]
     public async Task<ActionResult> DisconnectOrderItems(
-        [FromRoute()] ItemIdDto idDto,
-        [FromBody()] OrderItemIdDto[] orderItemsId
+        [FromRoute()] ItemWhereUniqueInput uniqueId,
+        [FromBody()] OrderItemWhereUniqueInput[] orderItemsId
     )
     {
         try
         {
-            await _service.DisconnectOrderItems(idDto, orderItemsId);
+            await _service.DisconnectOrderItems(uniqueId, orderItemsId);
         }
         catch (NotFoundException)
         {
@@ -125,14 +125,14 @@ public abstract class ItemsControllerBase : ControllerBase
     /// </summary>
     [HttpGet("{Id}/orderItems")]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<List<OrderItemDto>>> FindOrderItems(
-        [FromRoute()] ItemIdDto idDto,
-        [FromQuery()] OrderItemFindMany filter
+    public async Task<ActionResult<List<OrderItem>>> FindOrderItems(
+        [FromRoute()] ItemWhereUniqueInput uniqueId,
+        [FromQuery()] OrderItemFindManyArgs filter
     )
     {
         try
         {
-            return Ok(await _service.FindOrderItems(idDto, filter));
+            return Ok(await _service.FindOrderItems(uniqueId, filter));
         }
         catch (NotFoundException)
         {
@@ -144,7 +144,7 @@ public abstract class ItemsControllerBase : ControllerBase
     /// Meta data about Item records
     /// </summary>
     [HttpPost("meta")]
-    public async Task<ActionResult<MetadataDto>> ItemsMeta([FromQuery()] ItemFindMany filter)
+    public async Task<ActionResult<MetadataDto>> ItemsMeta([FromQuery()] ItemFindManyArgs filter)
     {
         return Ok(await _service.ItemsMeta(filter));
     }
@@ -155,13 +155,13 @@ public abstract class ItemsControllerBase : ControllerBase
     [HttpPatch("{Id}/orderItems")]
     [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateOrderItems(
-        [FromRoute()] ItemIdDto idDto,
-        [FromBody()] OrderItemIdDto[] orderItemsId
+        [FromRoute()] ItemWhereUniqueInput uniqueId,
+        [FromBody()] OrderItemWhereUniqueInput[] orderItemsId
     )
     {
         try
         {
-            await _service.UpdateOrderItems(idDto, orderItemsId);
+            await _service.UpdateOrderItems(uniqueId, orderItemsId);
         }
         catch (NotFoundException)
         {
@@ -177,13 +177,13 @@ public abstract class ItemsControllerBase : ControllerBase
     [HttpPatch("{Id}")]
     [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateItem(
-        [FromRoute()] ItemIdDto idDto,
+        [FromRoute()] ItemWhereUniqueInput uniqueId,
         [FromQuery()] ItemUpdateInput itemUpdateDto
     )
     {
         try
         {
-            await _service.UpdateItem(idDto, itemUpdateDto);
+            await _service.UpdateItem(uniqueId, itemUpdateDto);
         }
         catch (NotFoundException)
         {

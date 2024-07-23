@@ -23,7 +23,7 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// </summary>
     [HttpPost()]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<OrderItemDto>> CreateOrderItem(OrderItemCreateInput input)
+    public async Task<ActionResult<OrderItem>> CreateOrderItem(OrderItemCreateInput input)
     {
         var orderItem = await _service.CreateOrderItem(input);
 
@@ -35,11 +35,13 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// </summary>
     [HttpDelete("{Id}")]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult> DeleteOrderItem([FromRoute()] OrderItemIdDto idDto)
+    public async Task<ActionResult> DeleteOrderItem(
+        [FromRoute()] OrderItemWhereUniqueInput uniqueId
+    )
     {
         try
         {
-            await _service.DeleteOrderItem(idDto);
+            await _service.DeleteOrderItem(uniqueId);
         }
         catch (NotFoundException)
         {
@@ -54,8 +56,8 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// </summary>
     [HttpGet()]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<List<OrderItemDto>>> OrderItems(
-        [FromQuery()] OrderItemFindMany filter
+    public async Task<ActionResult<List<OrderItem>>> OrderItems(
+        [FromQuery()] OrderItemFindManyArgs filter
     )
     {
         return Ok(await _service.OrderItems(filter));
@@ -66,11 +68,13 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// </summary>
     [HttpGet("{Id}")]
     [Authorize(Roles = "user")]
-    public async Task<ActionResult<OrderItemDto>> OrderItem([FromRoute()] OrderItemIdDto idDto)
+    public async Task<ActionResult<OrderItem>> OrderItem(
+        [FromRoute()] OrderItemWhereUniqueInput uniqueId
+    )
     {
         try
         {
-            return await _service.OrderItem(idDto);
+            return await _service.OrderItem(uniqueId);
         }
         catch (NotFoundException)
         {
@@ -82,9 +86,11 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// Get a Item record for OrderItems
     /// </summary>
     [HttpGet("{Id}/items")]
-    public async Task<ActionResult<List<ItemDto>>> GetItem([FromRoute()] OrderItemIdDto idDto)
+    public async Task<ActionResult<List<Item>>> GetItem(
+        [FromRoute()] OrderItemWhereUniqueInput uniqueId
+    )
     {
-        var item = await _service.GetItem(idDto);
+        var item = await _service.GetItem(uniqueId);
         return Ok(item);
     }
 
@@ -92,9 +98,11 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// Get a Order record for OrderItems
     /// </summary>
     [HttpGet("{Id}/orders")]
-    public async Task<ActionResult<List<OrderDto>>> GetOrder([FromRoute()] OrderItemIdDto idDto)
+    public async Task<ActionResult<List<Order>>> GetOrder(
+        [FromRoute()] OrderItemWhereUniqueInput uniqueId
+    )
     {
-        var order = await _service.GetOrder(idDto);
+        var order = await _service.GetOrder(uniqueId);
         return Ok(order);
     }
 
@@ -103,7 +111,7 @@ public abstract class OrderItemsControllerBase : ControllerBase
     /// </summary>
     [HttpPost("meta")]
     public async Task<ActionResult<MetadataDto>> OrderItemsMeta(
-        [FromQuery()] OrderItemFindMany filter
+        [FromQuery()] OrderItemFindManyArgs filter
     )
     {
         return Ok(await _service.OrderItemsMeta(filter));
@@ -115,13 +123,13 @@ public abstract class OrderItemsControllerBase : ControllerBase
     [HttpPatch("{Id}")]
     [Authorize(Roles = "user")]
     public async Task<ActionResult> UpdateOrderItem(
-        [FromRoute()] OrderItemIdDto idDto,
+        [FromRoute()] OrderItemWhereUniqueInput uniqueId,
         [FromQuery()] OrderItemUpdateInput orderItemUpdateDto
     )
     {
         try
         {
-            await _service.UpdateOrderItem(idDto, orderItemUpdateDto);
+            await _service.UpdateOrderItem(uniqueId, orderItemUpdateDto);
         }
         catch (NotFoundException)
         {

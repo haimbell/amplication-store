@@ -4,20 +4,20 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace StoreService.Infrastructure.Models;
 
 [Table("Customers")]
-public class Customer
+public class CustomerDbModel
 {
-    [Required()]
-    public DateTime CreatedAt { get; set; }
-
     [Key()]
     [Required()]
     public string Id { get; set; }
 
-    [StringLength(1000)]
-    public string? Name { get; set; }
-
-    public List<Order>? Orders { get; set; } = new List<Order>();
+    [Required()]
+    public DateTime CreatedAt { get; set; }
 
     [Required()]
     public DateTime UpdatedAt { get; set; }
+
+    [StringLength(1000)]
+    public string? Name { get; set; }
+
+    public List<OrderDbModel>? Orders { get; set; } = new List<OrderDbModel>();
 }

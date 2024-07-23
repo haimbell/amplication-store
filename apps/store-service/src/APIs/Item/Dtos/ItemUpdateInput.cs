@@ -2,15 +2,15 @@ namespace StoreService.APIs.Dtos;
 
 public class ItemUpdateInput
 {
+    public string? Id { get; set; }
+
     public DateTime? CreatedAt { get; set; }
 
-    public string? Id { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public string? Name { get; set; }
 
-    public List<OrderItemIdDto>? OrderItems { get; set; }
-
     public double? Price { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public List<string>? OrderItems { get; set; }
 }

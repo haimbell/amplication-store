@@ -5,4 +5,4 @@ using StoreService.Infrastructure.Models;
 namespace StoreService.APIs.Dtos;
 
 [BindProperties(SupportsGet = true)]
-public class OrderItemFindMany : FindManyInput<OrderItem, OrderItemWhereInput> { }
+public class ItemFindManyArgs : FindManyInput<Item, ItemWhereInput> { }

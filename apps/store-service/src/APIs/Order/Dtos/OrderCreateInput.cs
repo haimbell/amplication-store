@@ -4,15 +4,15 @@ namespace StoreService.APIs.Dtos;
 
 public class OrderCreateInput
 {
-    public DateTime CreatedAt { get; set; }
-
-    public CustomerIdDto? Customer { get; set; }
-
     public string? Id { get; set; }
 
-    public List<OrderItemIdDto>? OrderItems { get; set; }
+    public DateTime CreatedAt { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
 
     public StatusEnum? Status { get; set; }
 
-    public DateTime UpdatedAt { get; set; }
+    public List<OrderItem>? OrderItems { get; set; }
+
+    public Customer? Customer { get; set; }
 }
