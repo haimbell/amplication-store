@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using StoreService.Infrastructure;
 using StoreService.Infrastructure.Models;
 
@@ -22,6 +23,12 @@ public class SeedDevelopmentData
 
         var usernameValue = "test@email.com";
         var passwordValue = "P@ssw0rd!";
+        var userManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+        if (await userManager.Users.AnyAsync(x => x.UserName == usernameValue))
+        {
+            return;
+        }
+
         var user = new IdentityUser
         {
             Email = usernameValue,
@@ -33,13 +40,12 @@ public class SeedDevelopmentData
         var password = new PasswordHasher<IdentityUser>();
         var hashed = password.HashPassword(user, passwordValue);
         user.PasswordHash = hashed;
-        var userStore = new UserStore<IdentityUser>(context);
-        await userStore.CreateAsync(user);
-        var _roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        await userManager.CreateAsync(user);
+        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
         foreach (var role in amplicationRoles)
         {
-            await userStore.AddToRoleAsync(user, _roleManager.NormalizeKey(role));
+            await userManager.AddToRoleAsync(user, roleManager.NormalizeKey(role));
         }
 
         await context.SaveChangesAsync();
