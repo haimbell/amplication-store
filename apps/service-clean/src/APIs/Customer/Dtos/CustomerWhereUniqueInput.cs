@@ -1,6 +1,6 @@
 namespace ServiceClean.APIs.Dtos;
 
-public class CustomerIdDto
+public class CustomerWhereUniqueInput
 {
     public string Id { get; set; }
 }

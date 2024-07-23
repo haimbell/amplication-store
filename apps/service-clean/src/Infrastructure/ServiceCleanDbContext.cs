@@ -10,5 +10,5 @@ public class ServiceCleanDbContext : IdentityDbContext<IdentityUser>
     public ServiceCleanDbContext(DbContextOptions<ServiceCleanDbContext> options)
         : base(options) { }
 
-    public DbSet<Customer> Customers { get; set; }
+    public DbSet<CustomerDbModel> Customers { get; set; }
 }

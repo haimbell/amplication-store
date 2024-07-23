@@ -8,30 +8,30 @@ public interface ICustomersService
     /// <summary>
     /// Create one Customer
     /// </summary>
-    public Task<CustomerDto> CreateCustomer(CustomerCreateInput customerDto);
+    public Task<Customer> CreateCustomer(CustomerCreateInput customer);
 
     /// <summary>
     /// Meta data about Customer records
     /// </summary>
-    public Task<MetadataDto> CustomersMeta(CustomerFindMany findManyArgs);
+    public Task<MetadataDto> CustomersMeta(CustomerFindManyArgs findManyArgs);
 
     /// <summary>
     /// Delete one Customer
     /// </summary>
-    public Task DeleteCustomer(CustomerIdDto idDto);
+    public Task DeleteCustomer(CustomerWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Find many Customers
     /// </summary>
-    public Task<List<CustomerDto>> Customers(CustomerFindMany findManyArgs);
+    public Task<List<Customer>> Customers(CustomerFindManyArgs findManyArgs);
 
     /// <summary>
     /// Get one Customer
     /// </summary>
-    public Task<CustomerDto> Customer(CustomerIdDto idDto);
+    public Task<Customer> Customer(CustomerWhereUniqueInput uniqueId);
 
     /// <summary>
     /// Update one Customer
     /// </summary>
-    public Task UpdateCustomer(CustomerIdDto idDto, CustomerUpdateInput updateDto);
+    public Task UpdateCustomer(CustomerWhereUniqueInput uniqueId, CustomerUpdateInput updateDto);
 }

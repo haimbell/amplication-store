@@ -5,19 +5,22 @@ namespace ServiceClean.APIs.Extensions;
 
 public static class CustomersExtensions
 {
-    public static CustomerDto ToDto(this Customer model)
+    public static Customer ToDto(this CustomerDbModel model)
     {
-        return new CustomerDto
+        return new Customer
         {
-            CreatedAt = model.CreatedAt,
             Id = model.Id,
+            CreatedAt = model.CreatedAt,
             UpdatedAt = model.UpdatedAt,
         };
     }
 
-    public static Customer ToModel(this CustomerUpdateInput updateDto, CustomerIdDto idDto)
+    public static CustomerDbModel ToModel(
+        this CustomerUpdateInput updateDto,
+        CustomerWhereUniqueInput uniqueId
+    )
     {
-        var customer = new Customer { Id = idDto.Id };
+        var customer = new CustomerDbModel { Id = uniqueId.Id };
 
         // map required fields
         if (updateDto.CreatedAt != null)
